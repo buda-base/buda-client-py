@@ -83,8 +83,15 @@ def get_iiif_fullimg_for_filename(volumeId, filename):
 def shorten(id):
 	return id[29:]
 
-# getting volumes for W23703, W1KG13126, W1GS66030 and W22704
-for workId in [URIRef("http://purl.bdrc.io/resource/W23703"), URIRef("http://purl.bdrc.io/resource/W1KG13126"), URIRef("http://purl.bdrc.io/resource/W1GS66030"), URIRef("http://purl.bdrc.io/resource/W22704")]:
+# getting volumes for W4CZ5369, W23703, W1KG13126, W1GS66030 and W22704
+worksIds = [
+	URIRef("http://purl.bdrc.io/resource/W4CZ5369"),
+	URIRef("http://purl.bdrc.io/resource/W23703"),
+	URIRef("http://purl.bdrc.io/resource/W1KG13126"),
+	URIRef("http://purl.bdrc.io/resource/W1GS66030"),
+	URIRef("http://purl.bdrc.io/resource/W22704")
+]
+for workId in workIds:
 	volseqnum = 0
 	csvfile = open('csv/%s-1.csv' % (shorten(workId)), 'w')
 	csvwriter = csv.writer(csvfile, delimiter=',',quoting=csv.QUOTE_MINIMAL)
