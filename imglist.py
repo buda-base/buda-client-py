@@ -91,25 +91,25 @@ worksIds = [
 	URIRef("http://purl.bdrc.io/resource/W1GS66030"),
 	URIRef("http://purl.bdrc.io/resource/W22704")
 ]
-for workId in workIds:
+for workId in worksIds:
 	volseqnum = 0
-	csvfile = open('csv/%s-1.csv' % (shorten(workId)), 'w')
-	csvwriter = csv.writer(csvfile, delimiter=',',quoting=csv.QUOTE_MINIMAL)
-	csvwriter.writerow(["volumeId", "imgSeq", "toIncrease", "toDecrease", "toIgnore", "imgDisplay", "imgUrl", "pagination"])
+	csvfile = open('tsv/%s-1.tsv' % (shorten(workId)), 'w', newline='')
+	csvwriter = csv.writer(csvfile, delimiter='\t',quoting=csv.QUOTE_MINIMAL)
+	csvwriter.writerow(["volumeId", "imgSeq", "imgUrl"])
 	for volinfo in get_volumes_for_work(workId):
 		volseqnum += 1
 		volnum = int(volinfo["volnum"])
 		if volseqnum >= 10:
 			volseqnum = 1
 			csvfile.close()
-			csvfile = open('csv/%s-%d.csv' % (shorten(workId), volnum), 'w')
-			csvwriter = csv.writer(csvfile, delimiter=',',quoting=csv.QUOTE_MINIMAL)
-			csvwriter.writerow(["volumeId", "imgSeq", "toIncrease", "toDecrease", "toIgnore", "imgDisplay", "imgUrl", "pagination"])
+			csvfile = open('tsv/%s-%d.tsv' % (shorten(workId), volnum), 'w', newline='')
+			csvwriter = csv.writer(csvfile, delimiter='\t',quoting=csv.QUOTE_MINIMAL)
+			csvwriter.writerow(["volumeId", "imgSeq", "imgUrl"])
 		imgseq = 0
 		volumeId = volinfo["volumeId"]
 		for imginfo in get_simple_imagelist_for_vol(volumeId):
 			imgseq += 1
 			if imgseq < 3:
 				continue
-			csvwriter.writerow([shorten(volumeId), imgseq, "", "", "", "", get_iiif_fullimg_for_filename(volumeId, imginfo["filename"]), ""])
+			csvwriter.writerow([shorten(volumeId), imgseq, get_iiif_fullimg_for_filename(volumeId, imginfo["filename"])])
 	csvfile.close()
