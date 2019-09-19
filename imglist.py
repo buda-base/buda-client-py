@@ -1,3 +1,4 @@
+import os
 import csv
 import json
 import rdflib
@@ -84,6 +85,9 @@ def shorten(id):
 	return id[29:]
 
 # getting volumes for W4CZ5369, W23703, W1KG13126, W1GS66030 and W22704
+outdir = "tsv/"
+if not os.path.exists(outdir):
+    os.makedirs(outdir)
 worksIds = [
 	URIRef("http://purl.bdrc.io/resource/W4CZ5369"),
 	URIRef("http://purl.bdrc.io/resource/W23703"),
